@@ -86,6 +86,28 @@
 		saveIdeas()
 	}
 
+	// Move idea up or down in the list
+	function moveIdea(ideaId, direction) {
+		ideas.update(current => {
+			const currentIndex = current.findIndex(idea => idea.id === ideaId)
+			if (currentIndex === -1) return current
+
+			const newIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1
+
+			// Check bounds
+			if (newIndex < 0 || newIndex >= current.length) return current
+
+			// Swap positions
+			const newArray = [...current]
+			const temp = newArray[currentIndex]
+			newArray[currentIndex] = newArray[newIndex]
+			newArray[newIndex] = temp
+
+			return newArray
+		})
+		saveIdeas()
+	}
+
 	// Handle contenteditable keydown events
 	function handleContentEditableKeydown(event, ideaId, field) {
 		if (event.key === "Enter") {
@@ -94,6 +116,12 @@
 			updateIdea(ideaId, field, newValue)
 			// Remove focus to indicate save is complete
 			event.target.blur()
+		} else if (event.key === "ArrowUp") {
+			event.preventDefault()
+			moveIdea(ideaId, "up")
+		} else if (event.key === "ArrowDown") {
+			event.preventDefault()
+			moveIdea(ideaId, "down")
 		}
 	}
 
@@ -130,6 +158,7 @@
 
 									{#if idea.description}
 										<p
+											class="faint-text"
 											contenteditable="true"
 											on:keydown={event =>
 												handleContentEditableKeydown(event, idea.id, "description")}
@@ -165,29 +194,22 @@
 		{/if}
 
 		<!-- add idea -->
-		<section class="bg-grey card" aria-labelledby="add-idea-heading">
-			<!-- <h2 id="add-idea-heading">Add New Idea</h2> -->
-			<form on:submit={handleSubmit} class="stack">
-				<!-- <label for="idea-title">Title</label> -->
-				<input
-					type="text"
-					id="idea-title"
-					bind:value={newIdea.title}
-					placeholder="Enter idea title..."
-					required
-				/>
 
-				<!-- <label for="idea-description">Description</label> -->
-				<textarea
-					id="idea-description"
-					bind:value={newIdea.description}
-					placeholder="Describe your idea..."
-					rows="3"
-				></textarea>
+		<!-- <h2 id="add-idea-heading">Add New Idea</h2> -->
+		<form on:submit={handleSubmit} class="stack">
+			<!-- <label for="idea-title">Title</label> -->
+			<input type="text" id="idea-title" bind:value={newIdea.title} placeholder="Enter idea title..." required />
 
-				<button type="submit fill" class="blue button">Add Idea</button>
-			</form>
-		</section>
+			<!-- <label for="idea-description">Description</label> -->
+			<textarea
+				id="idea-description"
+				bind:value={newIdea.description}
+				placeholder="Describe your idea..."
+				rows="3"
+			></textarea>
+
+			<button type="submit fill" class="blue button">Add Idea</button>
+		</form>
 	</main>
 </div>
 
