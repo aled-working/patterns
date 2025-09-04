@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from "svelte"
+	import { onMount, tick } from "svelte"
 	import { writable } from "svelte/store"
 
 	// Store for ideas list
@@ -86,26 +86,79 @@
 		saveIdeas()
 	}
 
+	// Track focus state for preserving focus after reordering
+	let focusedElement = null
+	let focusedField = null
+
 	// Move idea up or down in the list
-	function moveIdea(ideaId, direction) {
+	async function moveIdea(ideaId, direction) {
+		// Store current focus information
+		const activeElement = document.activeElement
+		const isTitle = activeElement.tagName === "H4"
+		const isDescription = activeElement.tagName === "P"
+
+		if (isTitle || isDescription) {
+			focusedElement = activeElement
+			focusedField = isTitle ? "title" : "description"
+		}
+
+		let newPosition = -1
+
 		ideas.update(current => {
 			const currentIndex = current.findIndex(idea => idea.id === ideaId)
 			if (currentIndex === -1) return current
 
-			const newIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1
+			newPosition = direction === "up" ? currentIndex - 1 : currentIndex + 1
 
 			// Check bounds
-			if (newIndex < 0 || newIndex >= current.length) return current
+			if (newPosition < 0 || newPosition >= current.length) {
+				focusedElement = null
+				focusedField = null
+				return current
+			}
 
 			// Swap positions
 			const newArray = [...current]
 			const temp = newArray[currentIndex]
-			newArray[currentIndex] = newArray[newIndex]
-			newArray[newIndex] = temp
+			newArray[currentIndex] = newArray[newPosition]
+			newArray[newPosition] = temp
 
 			return newArray
 		})
-		saveIdeas()
+
+		// If we actually moved the item, save and restore focus
+		if (newPosition !== -1) {
+			saveIdeas()
+
+			// Wait for DOM to update, then restore focus
+			await tick()
+
+			if (focusedElement && focusedField) {
+				// Find the element at the new position
+				const articles = document.querySelectorAll("article")
+				if (articles[newPosition]) {
+					const targetElement =
+						focusedField === "title"
+							? articles[newPosition].querySelector("h4")
+							: articles[newPosition].querySelector("p")
+
+					if (targetElement) {
+						targetElement.focus()
+						// Restore cursor position if possible
+						const range = document.createRange()
+						const selection = window.getSelection()
+						range.selectNodeContents(targetElement)
+						range.collapse(false) // Move cursor to end
+						selection.removeAllRanges()
+						selection.addRange(range)
+					}
+				}
+			}
+
+			// Reset focus tracking
+			focusedElement = null
+			focusedField = null
+		}
 	}
 
 	// Handle contenteditable keydown events

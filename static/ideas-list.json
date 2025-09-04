@@ -108,16 +108,16 @@
     "createdAt": "2025-09-04T17:06:26.433Z"
   },
   {
-    "id": 1757005482035,
-    "title": "Sight",
-    "description": "(The Big One (but... not the Biggest One)).",
-    "createdAt": "2025-09-04T17:04:42.035Z"
-  },
-  {
     "id": 1757005946417,
     "title": "Superpower 4. Ignoring",
     "description": "Sophisticated patterns. If you don't ignore, you die over-reacting",
     "createdAt": "2025-09-04T17:12:26.417Z"
+  },
+  {
+    "id": 1757005482035,
+    "title": "Sight",
+    "description": "(The Big One (but... not the Biggest One)).",
+    "createdAt": "2025-09-04T17:04:42.035Z"
   },
   {
     "id": 1757006082798,
