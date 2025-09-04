@@ -1,0 +1,67 @@
+.page {
+    gap: 3rem;
+}
+aside.col {
+    width: min(100%, 350px);
+    gap: .7rem
+}
+aside h2{
+    padding: 2rem 0;
+}
+.panel {
+    width: min(100%, 600px);
+}
+
+/* scrolling */
+
+.centring-but-scrollable {
+	min-height: 95svh;
+	padding-top: 8rem;
+}
+
+	/* SCROLLING */
+	.scroll-holder {
+		/* NB wrap an inner div around the contents to get the expected positioning */
+		display: grid;
+		place-items: center;
+		overflow-y: auto;
+		overflow-x: hidden;
+		height: 98svh;
+		/* outline: 3px dotted red; */
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+		padding-top: 6rem;
+	}
+
+	/* Modal */
+
+	/* Find */
+	input.Find {
+		/* outline: 4px solid var(--Green); */
+		padding: 2rem 1.5rem;
+		font-size: 1.2rem;
+	}
+	input.Find:focus,
+    input.focus {
+		outline: 4px solid var(--Green);
+	}
+
+	/* QuizQuestion */
+	.QuizQuestion.card:not(:hover) .wrong {
+		display: none;
+	}
+	.QuizQuestion.card .wrap {
+		gap: 1rem;
+	}
+
+	/* SidenavCard */
+
+	/* generators */
+	.generators.grid {
+		grid-template-columns: 1fr 1fr;
+	}
+	@media (max-width: 700px) {
+		.generators.grid {
+			grid-template-columns: 1fr;
+		}
+	}

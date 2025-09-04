@@ -1,0 +1,416 @@
+.app {
+	background-color: var(--Bg-grey);
+	
+	position: relative;
+	overflow: hidden;
+}
+.page {
+	min-height: 100svh;
+	/* background-color: var(--Bg-grey); */
+	/* padding: max(4rem, 1svw); */
+	padding: 4rem min(4rem, 5svw);
+	position: relative;
+	max-width: 100svw;
+	/* === */
+	/* padding-bottom: 6rem; */
+}
+
+
+
+/* tags */
+.tag {
+	border-radius: 5px;
+	padding: 0.5em 1em;
+	/* trying this out */
+	/* nice because it lets a white tag have a faint white background etc */
+	background-color: var(--Faint);
+	width: fit-content;
+	/* flex, for icons */
+	display: inline-flex;
+	align-items: center;
+	gap: 1em;
+}
+/* badge */
+.badge {
+		width: 3ch;
+		height: 3ch;
+		
+	border-radius: 50%;
+
+	background-color: var(--Faint);
+
+	/* flex, for icons */
+	display: inline-flex;
+	align-items: center;
+	 justify-content: center;
+	
+}
+/* highlight eg New */
+mark {
+	padding: 0 0.5ch 0.3ch 0.5ch;
+	font-size: 0.8rem;
+	font-weight: bold;
+	border-radius: 4px;
+}
+
+/* .sausage {
+	background-color: var(--Faint);
+	border-radius: var(--Rad);
+	padding: 1rem 1.5rem;
+	display: inline-flex;
+	gap: 1ch;
+	align-items: center;
+	width: max-content;
+} */
+
+/* buttons */
+button {
+	outline: none;
+	border: none;
+}
+button,
+.button,
+.btn,
+.sausage,
+.tab {
+	cursor: pointer;
+	border-radius: var(--Rad);
+	padding: 1rem 1.5rem;
+	height: 3.2rem; /* overrides v padding */
+	display: flex;
+	gap: 1ch;
+	align-items: center;
+	width: max-content;
+	background-color: var(--Faint);
+	font-size: inherit;
+	color: currentColor;
+	/* height: 3.5rem */
+	/* mobile */
+	@media (max-width: 800px) {
+		height: 2.8rem;
+		padding: 0 1rem;
+	}
+}
+
+button,
+.button,
+.btn,
+.round-button,
+.tiny-icon-butn,
+.tiny-icon-button,
+.big-round-button {
+	transition: scale 0.2s;
+	&:hover {
+		scale: 1.1;
+		z-index: 99;
+	}
+}
+.tab {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-top-left-radius: var(--Rad-small);
+	border-top-right-radius: var(--Rad-small);
+}
+/* //////////////// retire - can use 'btn green' to set color theme ////////////// */
+.strong-btn {
+	background-color: var(--Green);
+	color: white;
+}
+
+/* .round-butn,
+.tiny-icon-butn {
+	padding: 2rem;
+	aspect-ratio: 1 / 1;
+	border-radius: 50%;
+	overflow: hidden;
+	width: min-content;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+} */
+.round-button,
+.big-round-button,
+.tiny-icon-butn,
+.tiny-icon-button,
+.squircle-icon-button {
+	display: grid;
+	place-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center	;
+	gap: .5ch; /* adjust for closeness */
+	aspect-ratio: 1 / 1;
+	border-radius: 50%;
+	width: 3rem;
+	height: 3rem;
+	
+	& > *:first-child {
+		line-height: 50%;
+	}
+}
+.big-round-button {
+	width: 6rem;
+	height: 6rem;
+}
+.big-round-button {
+	width: 6rem;
+	height: 6rem;
+}
+.med-round-button {
+	width: 4.5rem;
+	height: 4.5rem;
+}
+.tiny-icon-butn,
+.tiny-icon-button {
+	/* padding: 0.3rem;
+	background-color: var(--Lighter-grey);
+	color: var(--Blue); */
+	background-color: var(--Faint);
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+}
+.squircle-icon-button  {
+	border-radius: 30%;
+	background-color: var(--Faint);
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+}
+
+/* cards and panels */
+.card,
+.panel,
+.modal,
+article {
+	/* ??? */
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+
+.card,
+article {
+	position: relative;
+	padding: 1.5rem;
+	border-radius: var(--Rad-small);
+	background-color: white;
+}
+.panel,
+dialog,
+.modal,
+[popover]  {
+	position: relative;
+	padding: 3rem;
+	padding: 3rem min(3rem, 5svw);
+	border-radius: var(--Rad);
+	background-color: white;
+	color: var(--Dark-text);
+
+}
+[popover] {
+	border: none;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+	&::backdrop{
+		background: #0009;
+	}
+	
+}
+
+dialog,
+.modal {
+
+	max-height: 90svh;
+}
+.card,
+.panel,
+article {
+	/* ??? */
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+dialog::backdrop {
+	background: rgba(0, 0, 0, 0.4);
+}
+
+dialog {
+	/* see .panel */
+	border: none;
+	max-width: 400px;
+	/* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); */
+}
+
+/* --- */
+blockquote {
+	font-weight: bolder;
+	font-size: 1.3em;
+	color: var(--Purple);
+	display: inline-block;
+	position: relative;
+	width: fit-content;
+}
+/* Add the opening quote */
+blockquote::before {
+	content: open-quote;
+	font-size: 2em;
+	color: #ccc;
+	position: absolute;
+	top: -0.1em;
+	right: 105%;
+}
+
+/* Add the closing quote */
+blockquote::after {
+	content: close-quote;
+	font-size: 2em;
+	color: #ccc;
+	position: absolute;
+	bottom: -0.6em;
+	left: 105%;
+}
+
+/* ======= forms ======= */
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+input[type='search'],
+input[type='tel'],
+input[type='time'],
+input[type='url'],
+input[type='week'],
+input[type='month'],
+input[type='file'],
+input[type='date'],
+input[type='datetime-local'],
+textarea,
+.contenteditable,
+.input {
+	background-color: var(--Lighter-grey);
+	padding: 1rem;
+	border-radius: var(--Rad-small);
+	/* -webkit-appearance: none;
+	appearance: none; */
+	outline: none;
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+:disabled,
+.disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	&:hover {
+		scale: 0.8;
+		text-decoration: line-through;
+	}
+}
+
+/* fun bits */
+/* ================= */
+.kbd {
+	border-radius: 4px;
+	border-bottom: 4px solid #00000033 !important;
+}
+.bubble,
+.bubble-left,
+.bubble-right {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	border-radius: var(--Rad);
+	padding: 2ch 2ch;
+	min-height: 3.5rem;
+	max-width: max-content;
+}
+.bubble-left {
+	border-bottom-left-radius: 0;
+	justify-self: flex-start;
+}
+.bubble-right {
+	border-bottom-right-radius: 0;
+	justify-self: flex-end;
+}
+/* special case for old ui */
+.Scenario.mobile{
+	.bubble, .bubble-left, .bubble-right{padding: 1ch 1.5ch;};
+
+}
+
+.flag-img {
+	height: 1.25rem;
+	width: auto;
+	border-radius: 0.25rem;
+	overflow: hidden;
+}
+/* joined up rows and columns of buttons */
+.stack,
+.bar {
+	/* group of inputs */
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	border-radius: var(--Rad-small);
+	overflow: hidden;
+}
+.stack > input,
+.stack > textarea,
+.stack > .button,
+.stack > button,
+.stack > .card {
+	/* group of inputs */
+	border-radius: 0;
+}
+.bar {
+	flex-direction: row;
+}
+.bar > * {
+	border-radius: 0;
+}
+input:not(:placeholder-shown),
+textarea:not(:placeholder-shown) {
+	background-color: var(--Bg-grey); /* example style for filled inputs */
+	font-weight: bold;
+}
+
+/* modal */
+.modal-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100svw;
+	height: 100svh;
+	padding: 3rem;
+	background-color: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(5px);
+	z-index: 11;
+}
+
+
+/* updated responsive switch */
+@media (max-width: 799px) {
+		.desktop-only {
+			display: none !important;
+		}
+	}
+@media (min-width: 800px) {
+	.mobile-only {
+		display: none !important;
+	}
+}
+
+/* George's responsive switch */
+.desktop {
+	@media (max-width: 767px) {
+		display: none; /* George's responsive switch */
+	}
+}
+
+.mobile {
+	@media (min-width: 768px) {
+		display: none; 
+	}
+}

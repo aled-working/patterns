@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap");
+html,
+body,
+.body,
+button,
+select {
+	font-family: "Figtree", sans-serif !important;
+	font-optical-sizing: auto;
+	font-weight: 500 !important;
+}
+h1 {
+	font-size: 3rem !important;
+}
+h2 {
+	font-size: 2rem;
+}
+
+h3 {
+	font-size: 1.6rem;
+}
+h4 {
+	font-size: 1.2rem;
+}
+h5 {
+	/* eg small section headings in a tool sidebar */
+	font-size: 0.85rem;
+}
+h6 {
+	/* eg in tags */
+	font-size: 0.7rem;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+b,
+strong {
+	font-weight: 700 !important;
+	/* text-align: inherit !important; */ /* overriding styles.css */
+}
+
+large,
+.large {
+	font-size: 1.2rem;
+	font-weight: 600;
+}
+small,
+.small,
+.meta {
+	font-size: 0.85rem;
+	font-weight: 500;
+}

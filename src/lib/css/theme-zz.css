@@ -1,0 +1,258 @@
+body {
+	--Darkest: #40275e;
+	--Purple: #7635c0;
+	--Faint-purple: #7635c066;
+	--Light-purple: #972dcf;
+	--Lighter-purple: #b865e4;
+	--Dark-text: #000000;
+	--Light-text: #929292;
+	--Lighter-text: #b8b8b8;
+	--Mid-grey: #898989;
+	--Light-grey: lightgrey;
+	--Lighter-grey: #e9e9e9;
+	--Bg-grey: #f7f4f1;
+	--Green: #3ac793;
+	--Dark-green: #11b176;
+	--Red: #ff3301;
+	--Dark-yellow: #f98700;
+	--Yellow: #ffd700;
+	--Blue: #5eaae1;
+	--Darker-blue: #1e87d2;
+	--Faintest-light: #ffffff11;
+	--Faint-light: #ffffff22;
+	--Faint-dark: #00000011;
+	/* from game background */
+	--Game-Pinkred: #f16947;/* strong (confident?) */
+	--Game-Pinkamber: #EF996E;/* almost there */
+	--Game-Lightgreen: #B5C49B;/* needs help */
+	--Game-Deepgreen: #598b62;
+
+	--Rad: 35px;
+	--Rad-big: 70px;
+	--Rad-small: 14px;
+
+	--Faint: color-mix(in srgb, currentColor 7%, transparent);
+	--Faintish: color-mix(in srgb, currentColor 40%, transparent);
+}
+
+/* set backgrounds  like modes */
+div,
+button,
+.button,
+span,
+details,
+article,
+footer,
+.card,
+.tag {
+&.dark {
+	background-color: var(--Darkest);
+	color: white;
+	 em{
+		color: var(--Yellow);
+	}
+}
+&.light {
+	background-color: white;
+	color: var(--Darkest);
+}
+&.white .light {
+	background-color: var(--Bg-grey);
+	color: var(--Darkest);
+}
+
+
+	&em{
+		color: var(--Light-purple);
+	}
+	&.white {
+		background-color: white;
+		color: var(--Darkest);
+	}
+	&.bg-grey {
+		background-color: var(--Bg-grey);
+		color: var(--Darkest);
+	}
+	&.mid-grey {
+		background-color: var(--Mid-grey);
+		color: white;
+	}
+	&.grey {
+		background-color: var(--Light-grey);
+		color: var(--Darkest);
+	}
+	&.lighter-grey {
+		background-color: var(--Lighter-grey);
+		color: var(--Darkest);
+	}
+	&.light {
+		background-color: white;
+		color: var(--Darkest);
+	}
+	&.purple {
+		background-color: var(--Purple);
+		color: white;
+	}
+	&.yellow, .gold {
+		background-color: var(--Yellow);
+		color: var(--Darkest);
+	}
+	&.dark-yellow {
+		background-color: var(--Dark-yellow);
+		color: white;
+	}
+	&.green {
+		background-color: var(--Green);
+		color: white;
+	}
+	&.dark-green {
+		background-color: var(--Dark-green);
+		color: white;
+	}
+	&.blue {
+		background-color: var(--Blue);
+		color: white;
+	}
+	&.darker-blue {
+		background-color: var(--Darker-blue);
+		color: white;
+	}
+	&.red {
+		background-color: var(--Red);
+		color: white;
+	}
+	&.game-pinkred {
+		background-color: var(--Game-Pinkred);
+		color: var(--Darkest);
+	}
+
+	&.game-pinkamber {
+		background-color: var(--Game-Pinkamber);
+		color: var(--Darkest);
+	}
+
+	&.game-lightgreen {
+		background-color: var(--Game-Lightgreen);
+		color: var(--Darkest);
+	}
+		&.game-deepgreen {
+		background-color: var(--Game-Deepgreen);
+		color: white;
+	}
+
+	&.faint {
+		/* background-color: color-mix(in srgb, currentColor 50%); */
+		background-color: color-mix(in srgb, currentColor 10%, transparent);
+		color: white;
+	}
+	&.faintish {
+		/* background-color: color-mix(in srgb, currentColor 50%); */
+		background-color: color-mix(in srgb, currentColor 20%, transparent);
+		color: white;
+	}
+	&.faint-dark {
+		/* background-color: color-mix(in srgb, currentColor 50%); */
+		background-color: color-mix(in srgb, black 15%, transparent);
+		/* background-color: color-mix(in srgb, var(--Darkest) 15%, transparent); */
+		/* color: white; */
+	}
+	&.faint-light {
+		/* background-color: color-mix(in srgb, currentColor 50%); */
+		background-color: color-mix(in srgb, white 15%, transparent);
+		/* background-color: color-mix(in srgb, var(--Darkest) 15%, transparent); */
+		/* color: white; */
+	}
+	&.dark-green-text {
+		color: var(--Dark-green);
+	}
+	&.transparent {
+		background-color: transparent !important;
+	}
+	&.no-bg {
+		background-color: none !important;
+	}
+}
+
+
+/* text */
+.darkest-text {
+	color: var(--Darkest);
+}
+.white-text {
+	color: white;
+}
+.purple-text {
+	color: var(--Purple);
+}
+.green-text {
+	color: var(--Green);
+}
+.dark-green-text {
+	color: var(--Dark-green);
+}
+.blue-text {
+	color: var(--Blue);
+}
+.darker-blue-text {
+	color: var(--Darker-blue);
+}
+.dark-yellow-text {
+	color: var(--Dark-yellow);
+}
+.faint-text {
+	opacity: .6;
+}
+.faint-dark-text {
+	color: var(--Darkest);
+	opacity: .6;
+}
+.faint-light-text {
+	color: white;
+	opacity: .6;
+}
+.yellow-text {
+	color: var(--Yellow);
+}
+.dark-yellow-text {
+	color: var(--Dark-yellow);
+}
+.red-text {
+	color: var(--Red);
+}
+
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5 {
+	&.faint {
+		opacity: 0.5;
+	}
+}
+
+/* base */
+/* body {
+	background: var(--Bg-grey);
+	color: var(--Dark-text);
+} */
+
+
+
+em{
+	/* color: var(--Light-purple); */
+	font-style: normal;
+}
+/* specific bits */
+.hero h3{
+	text-align: center;
+}
+.page{
+	background-color: var(--Bg-grey);
+}
+
+.page.games-gradient{
+	background-image: linear-gradient(0deg, #D49D9A 0%, #E6D1B9 50%, #7CA2A5 100%); /* from marvely games */
+    background-attachment: fixed;
+}

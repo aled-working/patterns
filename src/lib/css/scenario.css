@@ -1,0 +1,313 @@
+/* Scenario CSS */
+
+/* trying shortcut instead of svelte {#if} everywhere */
+
+/* 1. add the status eg 'before_start' in the top level */
+
+/* 2. hide the content unless the status matches */
+/* these are the statuses: 
+
+idle, scenario_loading, before_start, step_loading, ai_speaking, waiting_for_user, recording, transcribing, transcript_review, waiting_for_feedback, getting_feedback, feedback_ready, step_complete, scenario_complete, 
+
+*/
+.page:not(.before_start) .while_before_start,
+.page:not(.scenario_loading) .while_scenario_loading,
+.page:not(.step_loading) .while_step_loading,
+.page:not(.ai_speaking) .while_ai_speaking,
+.page:not(.waiting_for_user) .while_waiting_for_user,
+.page:not(.recording) .while_recording,
+.page:not(.transcribing) .while_transcribing,
+.page:not(.transcript_review) .while_transcript_review,
+.page:not(.waiting_for_feedback) .while_waiting_for_feedback,
+.page:not(.getting_feedback) .while_getting_feedback,
+.page:not(.feedback_ready) .while_feedback_ready,
+.page:not(.step_complete) .while_step_complete,
+.page:not(.scenario_complete) .while_scenario_complete
+{
+    display: none;
+}
+
+/* pulsing buttons */
+.pulsing {
+    animation: pulsing 1s infinite;
+}
+@keyframes pulsing {
+		0% {
+			scale: 1;
+		}
+		50% {
+            scale: 1.05;
+		}
+		100% {
+			scale: 1;
+		}
+	}
+
+
+
+
+	.half.page {
+		min-height: 100svh;
+		outline: 1px solid grey;
+	}
+
+	/* SCROLLING CHAT LAYOUT */
+
+	/* ===experiment - calc layout from a set panel height============== */
+	/* .scrollable-reverse-col makes the left content chat-like, because it shows us  the bottom of the content by default   */
+	/* the new vars let us align the bottom of the left column (the most salient part) with the botom of the white right panel, BUT does not prevent it from scrolling down when users wants to*/
+	.page {
+		--h-panel: 30rem; /* set a height for white panel */
+		--h-padding: calc(
+			50svh - (var(--h-panel) * 0.5)
+		); /* bottom of 'chat' panel (BUT user can scroll) */
+	}
+	.white.panel {
+		min-height: var(--h-panel);
+		width: min(500px, 100%);
+		position: sticky;
+		top: max(var(--h-padding), 100px);
+	}
+	@media (max-width: 799px) {
+		.white.panel {
+			top: 7rem;
+		}
+	}
+	/* ============================================= */
+	.page {
+		align-items: flex-start;
+		padding: 0;
+	}
+	main {
+		height: 98svh;
+		max-width: max-content;
+		/* override legacy css*/
+		margin: 0;
+		/* outline: 2px solid red; */
+	}
+	aside {
+		height: 99svh;
+		/* flex-shrink: 0; */
+		/* outline: 3px solid yellow; */
+	}
+
+	/* .white.panel {
+		width: min(500px, 100%);
+		position: sticky;
+		top: max(22svh, 100px);
+	} */
+	.cards.grid {
+		grid-template-columns: 1fr 1fr;
+	}
+	.avatar-title-buttons {
+		gap: 1rem;
+	}
+	.top-area {
+		position: relative;
+		/* & .replay-button-x {
+			position: absolute;
+			bottom: 0.5rem;
+		} */
+		& .bar {
+			position: absolute;
+			bottom: 0rem;
+			gap: 1px;
+			border-bottom: 1px solid var(--Lighter-grey);
+		}
+		& .ai-speaking-speed-options.stack {
+			position: absolute;
+			bottom: 0.5rem;
+			right: -5rem;
+			gap: 1px;
+			border-bottom: 1px solid var(--Lighter-grey);
+		}
+		/* & .open-speed-options-button-x {
+			position: absolute;
+			bottom: 0.5rem;
+			right: -4rem;
+		}
+		& .open-speed-options-button-x {
+			position: absolute;
+			bottom: 0.5rem;
+			right: -4rem;
+		} */
+	}
+	.talking-points {
+		text-align: left;
+		gap: 1rem;
+	}
+	.main-buttons {
+		gap: 0.5rem;
+	}
+	.feedback {
+		gap: 0.5rem;
+	}
+	.feedback-section {
+		line-height: 1.4;
+	}
+	q {
+		color: var(--Dark-green);
+	}
+	.description {
+		text-align: center;
+	}
+
+	/* ==== */
+	.scrollable-reverse-col {
+		/* height: 100vh; */
+		height: 99svh;
+		overflow-y: scroll;
+
+		display: flex;
+		flex-direction: column-reverse;
+
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE/Edge */
+
+		padding: 45svh 1rem;
+		/* see experiment */
+		padding: var(--h-padding) 1rem;
+
+		/* outline: 5px solid red; */
+		width: min(500px, 100%);
+	}
+
+	.scrollable-reverse-col::-webkit-scrollbar {
+		display: none; /* Chrome/Safari */
+	}
+
+	.chat-style-scrolling-content.col {
+		/* BEWARE - setting a height broke the scrolling */
+		/* outline: 5px solid pink; */
+		/* see experiment */
+		/* min-height: calc(var(--h-panel) * 0.75); */
+	}
+	.chat-style-scrolling-content-inner {
+		/* BEWARE - even defining an inner part and setting a height broke the scrolling */
+		/* min-height: var(--h-panel); */
+	}
+	section.intro {
+		min-height: 20rem;
+	}
+	.big-round-button.spin {
+		animation: button-spin 1s forwards infinite;
+	}
+	@keyframes button-spin {
+		to {
+			rotate: 360deg;
+		}
+	}
+	.MAIN-COL h3 {
+		text-align: center;
+	}
+
+	/* MOVE? */
+	button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+	.dev {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+	}
+
+	/* Error state styles */
+	.error-state {
+		text-align: center;
+		color: var(--red, #dc2626);
+		padding: 1rem;
+	}
+	.error-text {
+		font-weight: bold;
+		margin-bottom: 0.5rem;
+	}
+
+	/* RESPONSIVE */
+	/* @media (max-width: 799px) {
+		.desktop-only {
+			display: none !important;
+		}
+	}
+	@media (min-width: 800px) {
+		.mobile-only {
+			display: none !important;
+		}
+	} */
+	.playing-status {
+		position: absolute;
+		top: -2rem;
+		right: 1rem;
+	}
+
+	/* dev ui */
+	.showDevUi {
+		position: fixed;
+		bottom: 1rem;
+		right: 1rem;
+		z-index: 1000;
+	}
+	#dev-ui {
+		position: absolute;
+		z-index: 999;
+		top: 1rem;
+		left: 1rem;
+		background-color: white;
+	}
+	.wraplong {
+		white-space: pre-wrap; /* Allows wrapping */
+		word-break: break-word; /* Allows long words (like tokens or long JSON keys) to break */
+		overflow-wrap: break-word; /* Ensures compatibility across browsers */
+	}
+	.feedback-section {
+		width: 100%;
+	}
+	.traffic-lights {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		width: 100%;
+	}
+	.traffic-lights.bar > * {
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
+	.replay-ai-phrase-button {
+		position: absolute;
+		bottom: 0.5rem;
+	}
+	.waveform-container.big-round-button {
+		overflow: hidden;
+	}
+	.help-result-bubbles {
+		width: 100%;
+	}
+	.recording-button.big-round-button {
+		overflow: hidden;
+		position: relative;
+	}
+	.recording-button.big-round-button .button-background {
+		position: absolute;
+	}
+	.redo-button {
+		flex-shrink: 0;
+	}
+	section {
+		position: relative;
+	}
+	.avatar-and-controls {
+		position: relative;
+	}
+	.ai-speaking-controls {
+		position: absolute;
+		top: calc(50% - 1rem);
+		right: -3rem;
+		z-index: 99;
+	}
+	.conv-step {
+		padding: 0 2rem;
+	}
+
+	.desktop-only .HelpContent{
+		min-height: 9rem;
+	}
