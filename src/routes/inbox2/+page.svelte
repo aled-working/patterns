@@ -79,6 +79,29 @@
 		event.preventDefault()
 		addIdea()
 	}
+
+	// Update idea in store
+	function updateIdea(id, field, value) {
+		ideas.update(current => current.map(idea => (idea.id === id ? { ...idea, [field]: value } : idea)))
+		saveIdeas()
+	}
+
+	// Handle contenteditable keydown events
+	function handleContentEditableKeydown(event, ideaId, field) {
+		if (event.key === "Enter") {
+			event.preventDefault()
+			const newValue = event.target.textContent.trim()
+			updateIdea(ideaId, field, newValue)
+			// Remove focus to indicate save is complete
+			event.target.blur()
+		}
+	}
+
+	// Handle contenteditable blur (when user clicks away)
+	function handleContentEditableBlur(event, ideaId, field) {
+		const newValue = event.target.textContent.trim()
+		updateIdea(ideaId, field, newValue)
+	}
 </script>
 
 <div class="page centred-col">
@@ -97,10 +120,23 @@
 						<article class=" fill">
 							<div class="row apart">
 								<div class="col">
-									<h4 contenteditable="true">{idea.title}</h4>
+									<h4
+										contenteditable="true"
+										on:keydown={event => handleContentEditableKeydown(event, idea.id, "title")}
+										on:blur={event => handleContentEditableBlur(event, idea.id, "title")}
+									>
+										{idea.title}
+									</h4>
 
 									{#if idea.description}
-										<p contenteditable="true">{idea.description}</p>
+										<p
+											contenteditable="true"
+											on:keydown={event =>
+												handleContentEditableKeydown(event, idea.id, "description")}
+											on:blur={event => handleContentEditableBlur(event, idea.id, "description")}
+										>
+											{idea.description}
+										</p>
 									{/if}
 								</div>
 								<button
