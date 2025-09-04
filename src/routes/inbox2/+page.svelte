@@ -50,13 +50,13 @@
 	function addIdea() {
 		if (newIdea.title.trim()) {
 			ideas.update(current => [
+				...current,
 				{
 					id: Date.now(),
 					title: newIdea.title.trim(),
 					description: newIdea.description.trim(),
 					createdAt: new Date().toISOString(),
 				},
-				...current,
 			])
 
 			// Clear form
@@ -83,47 +83,26 @@
 
 <div class="page centred-col">
 	<main class="panel">
-		<header>
-			<h1>Ideas Inbox</h1>
-			<p>Add and manage your article ideas</p>
-		</header>
+		<!-- header -->
+		<!-- <header>
+			<h1>Key Ideas</h1>
+		</header> -->
 
-		<section class="card" aria-labelledby="add-idea-heading">
-			<h2 id="add-idea-heading">Add New Idea</h2>
-			<form on:submit={handleSubmit} class="stack">
-				<div>
-					<label for="idea-title">Title</label>
-					<input
-						type="text"
-						id="idea-title"
-						bind:value={newIdea.title}
-						placeholder="Enter idea title..."
-						required
-					/>
-				</div>
-
-				<div>
-					<label for="idea-description">Description</label>
-					<textarea
-						id="idea-description"
-						bind:value={newIdea.description}
-						placeholder="Describe your idea..."
-						rows="3"
-					></textarea>
-				</div>
-
-				<button type="submit" class="btn">Add Idea</button>
-			</form>
-		</section>
-
+		<!-- ideas list -->
 		{#if $ideas.length > 0}
 			<section aria-labelledby="ideas-list-heading">
-				<h2 id="ideas-list-heading">Saved Ideas ({$ideas.length})</h2>
+				<!-- <h2 id="ideas-list-heading">Saved Ideas ({$ideas.length})</h2> -->
 				<div class="ideas-list">
 					{#each $ideas as idea (idea.id)}
-						<article class="card idea-item">
-							<header>
-								<h3>{idea.title}</h3>
+						<article class=" fill">
+							<div class="row apart">
+								<div class="col">
+									<h4 contenteditable="true">{idea.title}</h4>
+
+									{#if idea.description}
+										<p contenteditable="true">{idea.description}</p>
+									{/if}
+								</div>
 								<button
 									class="tiny-icon-button"
 									on:click={() => removeIdea(idea.id)}
@@ -132,17 +111,13 @@
 								>
 									✕
 								</button>
-							</header>
+							</div>
 
-							{#if idea.description}
-								<p>{idea.description}</p>
-							{/if}
-
-							<footer class="idea-meta">
+							<!-- <footer class="idea-meta">
 								<small>
 									Added {new Date(idea.createdAt).toLocaleDateString()}
 								</small>
-							</footer>
+							</footer> -->
 						</article>
 					{/each}
 				</div>
@@ -152,42 +127,34 @@
 				<p><em>No ideas yet. Add your first idea above!</em></p>
 			</section>
 		{/if}
+
+		<!-- add idea -->
+		<section class="bg-grey card" aria-labelledby="add-idea-heading">
+			<!-- <h2 id="add-idea-heading">Add New Idea</h2> -->
+			<form on:submit={handleSubmit} class="stack">
+				<!-- <label for="idea-title">Title</label> -->
+				<input
+					type="text"
+					id="idea-title"
+					bind:value={newIdea.title}
+					placeholder="Enter idea title..."
+					required
+				/>
+
+				<!-- <label for="idea-description">Description</label> -->
+				<textarea
+					id="idea-description"
+					bind:value={newIdea.description}
+					placeholder="Describe your idea..."
+					rows="3"
+				></textarea>
+
+				<button type="submit fill" class="blue button">Add Idea</button>
+			</form>
+		</section>
 	</main>
 </div>
 
 <style>
 	/* Minimal additional styles for this specific component */
-	.ideas-list {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.idea-item {
-		position: relative;
-	}
-
-	.idea-item header {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		margin-bottom: 0.5rem;
-	}
-
-	.idea-item h3 {
-		margin: 0;
-		flex: 1;
-		margin-right: 1rem;
-	}
-
-	.idea-meta {
-		margin-top: 1rem;
-		opacity: 0.7;
-	}
-
-	label {
-		display: block;
-		margin-bottom: 0.5rem;
-		font-weight: bold;
-	}
 </style>
