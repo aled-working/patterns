@@ -1,52 +1,99 @@
 <script>
-	import { onMount, tick } from "svelte"
-	import { writable } from "svelte/store"
+	import { onMount, tick } from 'svelte';
+	import { writable } from 'svelte/store';
+
+	// Constants for better maintainability
+	const ELEMENT_TYPES = {
+		TITLE: 'H4',
+		DESCRIPTION: 'P',
+	};
+
+	const FIELDS = {
+		TITLE: 'title',
+		DESCRIPTION: 'description',
+	};
 
 	// Store for ideas list
-	let ideas = writable([])
+	let ideas = writable([]);
 
 	// Form data
 	let newIdea = {
-		title: "",
-		description: "",
+		title: '',
+		description: '',
+	};
+
+	// Focus management utility
+	let focusState = { element: null, field: null };
+
+	function saveFocus(element) {
+		const tagName = element?.tagName;
+		focusState = {
+			element,
+			field:
+				tagName === ELEMENT_TYPES.TITLE
+					? FIELDS.TITLE
+					: tagName === ELEMENT_TYPES.DESCRIPTION
+						? FIELDS.DESCRIPTION
+						: null,
+		};
 	}
 
-	// Load ideas from API on mount
-	onMount(async () => {
+	async function restoreFocus(position) {
+		if (!focusState.element || !focusState.field) return;
+
+		await tick();
+
+		const articles = document.querySelectorAll('article');
+		const targetArticle = articles[position];
+		if (!targetArticle) return;
+
+		const selector = focusState.field === FIELDS.TITLE ? 'h4' : 'p';
+		const targetElement = targetArticle.querySelector(selector);
+
+		if (targetElement) {
+			targetElement.focus();
+			// Position cursor at end
+			const range = document.createRange();
+			const selection = window.getSelection();
+			range.selectNodeContents(targetElement);
+			range.collapse(false);
+			selection.removeAllRanges();
+			selection.addRange(range);
+		}
+
+		focusState = { element: null, field: null };
+	}
+
+	// API utilities
+	async function loadIdeas() {
 		try {
-			const response = await fetch("/api/ideas")
+			const response = await fetch('/api/ideas');
 			if (response.ok) {
-				const data = await response.json()
-				ideas.set(data)
+				const data = await response.json();
+				ideas.set(data);
 			}
 		} catch (error) {
-			console.log("No existing ideas file found, starting fresh")
-		}
-	})
-
-	// Save ideas to JSON file via API
-	async function saveIdeas() {
-		const currentIdeas = $ideas
-		try {
-			const response = await fetch("/api/ideas", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(currentIdeas, null, 2),
-			})
-
-			if (!response.ok) {
-				throw new Error("Failed to save ideas")
-			}
-		} catch (error) {
-			console.error("Error saving ideas:", error)
-			// Fallback: use localStorage
-			localStorage.setItem("ideas-list", JSON.stringify(currentIdeas))
+			console.log('No existing ideas file found, starting fresh');
 		}
 	}
 
-	// Add new idea
+	async function saveIdeas() {
+		const currentIdeas = $ideas;
+		try {
+			const response = await fetch('/api/ideas', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(currentIdeas, null, 2),
+			});
+
+			if (!response.ok) throw new Error('Failed to save ideas');
+		} catch (error) {
+			console.error('Error saving ideas:', error);
+			localStorage.setItem('ideas-list', JSON.stringify(currentIdeas));
+		}
+	}
+
+	// CRUD operations
 	function addIdea() {
 		if (newIdea.title.trim()) {
 			ideas.update(current => [
@@ -57,132 +104,91 @@
 					description: newIdea.description.trim(),
 					createdAt: new Date().toISOString(),
 				},
-			])
+			]);
 
 			// Clear form
-			newIdea.title = ""
-			newIdea.description = ""
+			newIdea.title = '';
+			newIdea.description = '';
 
-			// Save to file
-			saveIdeas()
+			saveIdeas();
 		}
 	}
 
-	// Remove idea
 	function removeIdea(id) {
-		ideas.update(current => current.filter(idea => idea.id !== id))
-		saveIdeas()
+		ideas.update(current => current.filter(idea => idea.id !== id));
+		saveIdeas();
 	}
 
-	// Handle form submission
-	function handleSubmit(event) {
-		event.preventDefault()
-		addIdea()
-	}
-
-	// Update idea in store
 	function updateIdea(id, field, value) {
-		ideas.update(current => current.map(idea => (idea.id === id ? { ...idea, [field]: value } : idea)))
-		saveIdeas()
+		ideas.update(current => current.map(idea => (idea.id === id ? { ...idea, [field]: value } : idea)));
+		saveIdeas();
 	}
 
-	// Track focus state for preserving focus after reordering
-	let focusedElement = null
-	let focusedField = null
-
-	// Move idea up or down in the list
+	// Reordering with focus preservation
 	async function moveIdea(ideaId, direction) {
-		// Store current focus information
-		const activeElement = document.activeElement
-		const isTitle = activeElement.tagName === "H4"
-		const isDescription = activeElement.tagName === "P"
+		saveFocus(document.activeElement);
 
-		if (isTitle || isDescription) {
-			focusedElement = activeElement
-			focusedField = isTitle ? "title" : "description"
-		}
-
-		let newPosition = -1
+		let newPosition = -1;
 
 		ideas.update(current => {
-			const currentIndex = current.findIndex(idea => idea.id === ideaId)
-			if (currentIndex === -1) return current
+			const currentIndex = current.findIndex(idea => idea.id === ideaId);
+			if (currentIndex === -1) return current;
 
-			newPosition = direction === "up" ? currentIndex - 1 : currentIndex + 1
+			newPosition = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
 
 			// Check bounds
 			if (newPosition < 0 || newPosition >= current.length) {
-				focusedElement = null
-				focusedField = null
-				return current
+				focusState = { element: null, field: null };
+				return current;
 			}
 
 			// Swap positions
-			const newArray = [...current]
-			const temp = newArray[currentIndex]
-			newArray[currentIndex] = newArray[newPosition]
-			newArray[newPosition] = temp
+			const newArray = [...current];
+			const temp = newArray[currentIndex];
+			[newArray[currentIndex], newArray[newPosition]] = [newArray[newPosition], newArray[currentIndex]];
 
-			return newArray
-		})
+			return newArray;
+		});
 
-		// If we actually moved the item, save and restore focus
 		if (newPosition !== -1) {
-			saveIdeas()
-
-			// Wait for DOM to update, then restore focus
-			await tick()
-
-			if (focusedElement && focusedField) {
-				// Find the element at the new position
-				const articles = document.querySelectorAll("article")
-				if (articles[newPosition]) {
-					const targetElement =
-						focusedField === "title"
-							? articles[newPosition].querySelector("h4")
-							: articles[newPosition].querySelector("p")
-
-					if (targetElement) {
-						targetElement.focus()
-						// Restore cursor position if possible
-						const range = document.createRange()
-						const selection = window.getSelection()
-						range.selectNodeContents(targetElement)
-						range.collapse(false) // Move cursor to end
-						selection.removeAllRanges()
-						selection.addRange(range)
-					}
-				}
-			}
-
-			// Reset focus tracking
-			focusedElement = null
-			focusedField = null
+			saveIdeas();
+			await restoreFocus(newPosition);
 		}
 	}
 
-	// Handle contenteditable keydown events
-	function handleContentEditableKeydown(event, ideaId, field) {
-		if (event.key === "Enter") {
-			event.preventDefault()
-			const newValue = event.target.textContent.trim()
-			updateIdea(ideaId, field, newValue)
-			// Remove focus to indicate save is complete
-			event.target.blur()
-		} else if (event.key === "ArrowUp") {
-			event.preventDefault()
-			moveIdea(ideaId, "up")
-		} else if (event.key === "ArrowDown") {
-			event.preventDefault()
-			moveIdea(ideaId, "down")
+	// Unified contenteditable handler
+	function handleEditableKeydown(event, ideaId, field) {
+		const { key, target } = event;
+
+		switch (key) {
+			case 'Enter':
+				event.preventDefault();
+				updateIdea(ideaId, field, target.textContent.trim());
+				target.blur();
+				break;
+			case 'ArrowUp':
+				event.preventDefault();
+				moveIdea(ideaId, 'up');
+				break;
+			case 'ArrowDown':
+				event.preventDefault();
+				moveIdea(ideaId, 'down');
+				break;
 		}
 	}
 
-	// Handle contenteditable blur (when user clicks away)
-	function handleContentEditableBlur(event, ideaId, field) {
-		const newValue = event.target.textContent.trim()
-		updateIdea(ideaId, field, newValue)
+	function handleEditableBlur(event, ideaId, field) {
+		updateIdea(ideaId, field, event.target.textContent.trim());
 	}
+
+	// Event handlers
+	function handleSubmit(event) {
+		event.preventDefault();
+		addIdea();
+	}
+
+	// Initialize
+	onMount(loadIdeas);
 </script>
 
 <div class="page centred-col">
@@ -203,8 +209,8 @@
 								<div class="col">
 									<h4
 										contenteditable="true"
-										on:keydown={event => handleContentEditableKeydown(event, idea.id, "title")}
-										on:blur={event => handleContentEditableBlur(event, idea.id, "title")}
+										on:keydown={event => handleContentEditableKeydown(event, idea.id, 'title')}
+										on:blur={event => handleContentEditableBlur(event, idea.id, 'title')}
 									>
 										{idea.title}
 									</h4>
@@ -214,8 +220,8 @@
 											class="faint-text"
 											contenteditable="true"
 											on:keydown={event =>
-												handleContentEditableKeydown(event, idea.id, "description")}
-											on:blur={event => handleContentEditableBlur(event, idea.id, "description")}
+												handleContentEditableKeydown(event, idea.id, 'description')}
+											on:blur={event => handleContentEditableBlur(event, idea.id, 'description')}
 										>
 											{idea.description}
 										</p>

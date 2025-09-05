@@ -158,9 +158,9 @@
 
 .wrapLong,
 .wraplong {
-  white-space: pre-wrap;     /* Allows wrapping */
-  word-break: break-word;    /* Allows long words (like tokens or long JSON keys) to break */
-  overflow-wrap: break-word; /* Ensures compatibility across browsers */
+	white-space: pre-wrap; /* Allows wrapping */
+	word-break: break-word; /* Allows long words (like tokens or long JSON keys) to break */
+	overflow-wrap: break-word; /* Ensures compatibility across browsers */
 }
 
 /* wireframe parts */
@@ -189,7 +189,6 @@
 .scroll {
 	overflow-y: auto;
 }
-.fill{
-	 width: 100%;
-
+.fill {
+	width: 100%;
 }

@@ -1,6 +1,6 @@
 .app {
 	background-color: var(--Bg-grey);
-	
+
 	position: relative;
 	overflow: hidden;
 }
@@ -14,8 +14,6 @@
 	/* === */
 	/* padding-bottom: 6rem; */
 }
-
-
 
 /* tags */
 .tag {
@@ -32,9 +30,9 @@
 }
 /* badge */
 .badge {
-		width: 3ch;
-		height: 3ch;
-		
+	width: 3ch;
+	height: 3ch;
+
 	border-radius: 50%;
 
 	background-color: var(--Faint);
@@ -42,8 +40,7 @@
 	/* flex, for icons */
 	display: inline-flex;
 	align-items: center;
-	 justify-content: center;
-	
+	justify-content: center;
 }
 /* highlight eg New */
 mark {
@@ -138,13 +135,13 @@ button,
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center	;
-	gap: .5ch; /* adjust for closeness */
+	justify-content: center;
+	gap: 0.5ch; /* adjust for closeness */
 	aspect-ratio: 1 / 1;
 	border-radius: 50%;
 	width: 3rem;
 	height: 3rem;
-	
+
 	& > *:first-child {
 		line-height: 50%;
 	}
@@ -171,7 +168,7 @@ button,
 	height: 2rem;
 	padding: 0;
 }
-.squircle-icon-button  {
+.squircle-icon-button {
 	border-radius: 30%;
 	background-color: var(--Faint);
 	width: 2rem;
@@ -200,27 +197,24 @@ article {
 .panel,
 dialog,
 .modal,
-[popover]  {
+[popover] {
 	position: relative;
 	padding: 3rem;
 	padding: 3rem min(3rem, 5svw);
 	border-radius: var(--Rad);
 	background-color: white;
 	color: var(--Dark-text);
-
 }
 [popover] {
 	border: none;
-	box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-	&::backdrop{
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	&::backdrop {
 		background: #0009;
 	}
-	
 }
 
 dialog,
 .modal {
-
 	max-height: 90svh;
 }
 .card,
@@ -335,9 +329,12 @@ textarea,
 	justify-self: flex-end;
 }
 /* special case for old ui */
-.Scenario.mobile{
-	.bubble, .bubble-left, .bubble-right{padding: 1ch 1.5ch;};
-
+.Scenario.mobile {
+	.bubble,
+	.bubble-left,
+	.bubble-right {
+		padding: 1ch 1.5ch;
+	}
 }
 
 .flag-img {
@@ -389,13 +386,12 @@ textarea:not(:placeholder-shown) {
 	z-index: 11;
 }
 
-
 /* updated responsive switch */
 @media (max-width: 799px) {
-		.desktop-only {
-			display: none !important;
-		}
+	.desktop-only {
+		display: none !important;
 	}
+}
 @media (min-width: 800px) {
 	.mobile-only {
 		display: none !important;
@@ -411,6 +407,6 @@ textarea:not(:placeholder-shown) {
 
 .mobile {
 	@media (min-width: 768px) {
-		display: none; 
+		display: none;
 	}
 }
