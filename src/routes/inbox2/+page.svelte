@@ -193,6 +193,11 @@
 					}
 				}
 				break;
+			case 'Escape':
+				// Save current edit and blur to cancel focus
+				updateIdea(ideaId, field, target.textContent.trim());
+				target.blur();
+				break;
 			case 'ArrowUp':
 				event.preventDefault();
 				moveIdea(ideaId, 'up');
@@ -205,13 +210,52 @@
 	}
 
 	function handleEditableBlur(event, ideaId, field) {
-		updateIdea(ideaId, field, event.target.textContent.trim());
+		let content = event.target.textContent.trim();
+		// For titles, preserve the '## ' prefix if it exists
+		if (field === 'title' && event.target.tagName === 'H2') {
+			// Get the current title from the store to check if it had the prefix
+			const currentIdeas = $ideas;
+			const idea = currentIdeas.find(i => i.id === ideaId);
+			const currentTitle = idea ? idea.title : '';
+			if (currentTitle && currentTitle.startsWith('## ')) {
+				// Ensure the content still has the prefix
+				if (!content.startsWith('## ')) {
+					content = '## ' + content;
+				}
+			}
+		}
+		updateIdea(ideaId, field, content);
+	}
+
+	function handleTitleFocus(event, ideaId) {
+		const target = event.target;
+		// Get the current title from the store
+		const currentIdeas = $ideas;
+		const idea = currentIdeas.find(i => i.id === ideaId);
+		const fullTitle = idea ? idea.title : '';
+
+		if (fullTitle && target.textContent !== fullTitle) {
+			target.textContent = fullTitle;
+			// Position cursor at end
+			const range = document.createRange();
+			const selection = window.getSelection();
+			range.selectNodeContents(target);
+			range.collapse(false);
+			selection.removeAllRanges();
+			selection.addRange(range);
+		}
 	}
 
 	// Event handlers
 	function handleSubmit(event) {
 		event.preventDefault();
 		addIdea();
+	}
+
+	function handleFormKeydown(event) {
+		if (event.key === 'Escape') {
+			event.target.blur();
+		}
 	}
 
 	// Global keyboard navigation
@@ -259,25 +303,37 @@
 						<article class=" fill">
 							<div class="row apart">
 								<div class="col">
-									<h4
-										class="idea-title"
-										contenteditable="true"
-										on:keydown={event => handleEditableKeydown(event, idea.id, 'title')}
-										on:blur={event => handleEditableBlur(event, idea.id, 'title')}
-									>
-										{idea.title}
-									</h4>
-
-									{#if idea.description}
-										<p
-											class="faint-text idea-description"
+									{#if idea.title && idea.title.startsWith('## ')}
+										<h2
+											class="idea-title h2-title"
 											contenteditable="true"
-											on:keydown={event => handleEditableKeydown(event, idea.id, 'description')}
-											on:blur={event => handleEditableBlur(event, idea.id, 'description')}
+											on:focus={event => handleTitleFocus(event, idea.id)}
+											on:keydown={event => handleEditableKeydown(event, idea.id, 'title')}
+											on:blur={event => handleEditableBlur(event, idea.id, 'title')}
+											data-idea-id={idea.id}
 										>
-											{idea.description}
-										</p>
+											{idea.title.substring(3)}
+										</h2>
+									{:else}
+										<h4
+											class="idea-title"
+											contenteditable="true"
+											on:keydown={event => handleEditableKeydown(event, idea.id, 'title')}
+											on:blur={event => handleEditableBlur(event, idea.id, 'title')}
+											data-idea-id={idea.id}
+										>
+											{idea.title}
+										</h4>
 									{/if}
+
+									<p
+										class="faint-text idea-description"
+										contenteditable="true"
+										on:keydown={event => handleEditableKeydown(event, idea.id, 'description')}
+										on:blur={event => handleEditableBlur(event, idea.id, 'description')}
+									>
+										{idea.description || '...'}
+									</p>
 								</div>
 								<button
 									class="white tiny-icon-button remove-idea hide-until-hover"
@@ -309,7 +365,14 @@
 		<!-- <h2 id="add-idea-heading">Add New Idea</h2> -->
 		<form on:submit={handleSubmit} class="stack new-idea">
 			<!-- <label for="idea-title">Title</label> -->
-			<input type="text" id="idea-title" bind:value={newIdea.title} placeholder="Enter idea title..." required />
+			<input
+				type="text"
+				id="idea-title"
+				bind:value={newIdea.title}
+				placeholder="Enter idea title..."
+				required
+				on:keydown={handleFormKeydown}
+			/>
 
 			<!-- <label for="idea-description">Description</label> -->
 			<textarea
@@ -317,6 +380,7 @@
 				bind:value={newIdea.description}
 				placeholder="Describe your idea..."
 				rows="3"
+				on:keydown={handleFormKeydown}
 			></textarea>
 
 			<button type="submit fill" class="blue button">Add Idea</button>
