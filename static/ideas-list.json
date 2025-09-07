@@ -1,128 +1,134 @@
 [
-	{
-		"id": 1757002796987,
-		"title": "we used to be simple blob-like cells in a primordial sea",
-		"description": "couldn't do much",
-		"createdAt": "2025-09-04T16:19:56.987Z"
-	},
-	{
-		"id": 1757002310902,
-		"title": "our first superpower was to avoid death by copying ourselves.",
-		"description": "reproduction is part of what we mean by 'living'",
-		"createdAt": "2025-09-04T16:11:50.902Z"
-	},
-	{
-		"id": 1757002963954,
-		"title": "We copied ourselves slightly badly. Pure genius.",
-		"description": "mutations",
-		"createdAt": "2025-09-04T16:22:43.954Z"
-	},
-	{
-		"id": 1757003090193,
-		"title": "Sometimes, conditions in the primordial sea would change making it too toxic, too hot or too cold for us.",
-		"description": "Being just blobs, we just died.",
-		"createdAt": "2025-09-04T16:24:50.193Z"
-	},
-	{
-		"id": 1757003193241,
-		"title": "But some of the oddballs preferred the new conditions, and thrived.",
-		"description": "and reproduced and became the new normal. Natural selection.",
-		"createdAt": "2025-09-04T16:26:33.241Z"
-	},
-	{
-		"id": 1757003383464,
-		"title": "the bad copies we were effectively experiments",
-		"description": "If a peculiarity helped some of us thrive and reproduce more , that become the new normal.",
-		"createdAt": "2025-09-04T16:29:43.464Z"
-	},
-	{
-		"id": 1757003716806,
-		"title": "On and on. We avoided death and became more complicated. None of it on purpose.",
-		"description": "New weirdnesses were being added to the previous ones, by luck. Over zillions of generations. It took a lot of us to be \nborn live and die",
-		"createdAt": "2025-09-04T16:35:16.806Z"
-	},
-	{
-		"id": 1757003996228,
-		"title": "Superpower 2. Reacting (in any way) might give you a fighting chance.",
-		"description": "If a blob had a mutation that made it twitch when the sea chemistry changed, it might twitch into safe water and survive. No brain involved, but doing nothing lets death get you.",
-		"createdAt": "2025-09-04T16:39:56.228Z"
-	},
-	{
-		"id": 1757004317554,
-		"title": "And... Bingo. The first sensory mechanism.",
-		"description": "If a change to your environment has an effect on you, you're 'sensing' it, and if it triggers some useful, you avoid death.",
-		"createdAt": "2025-09-04T16:45:17.554Z"
-	},
-	{
-		"id": 1757004498194,
-		"title": "Taste. if the sea you're in gets toxic Stop drinking it.",
-		"description": "as blobs We were like cows in a grass field Absorbing what we needed From the nutrient mix Born in the salty sea. If we were able to stop that absorption Something toxic was in the water It helped us avoid death.",
-		"createdAt": "2025-09-04T16:48:18.194Z"
-	},
-	{
-		"id": 1757004622240,
-		"title": "reacting too late is no good.",
-		"description": "if you've already absorbed poison, your reaction won't save you.",
-		"createdAt": "2025-09-04T16:50:22.240Z"
-	},
-	{
-		"id": 1757004722336,
-		"title": "Superpower 3. Reacting before its too late is very good. Smell is 'tasting before it gets in'.",
-		"description": "if something on the outside can detect the thing that will kill your inside You can shut down without having to taste it.",
-		"createdAt": "2025-09-04T16:52:02.336Z"
-	},
-	{
-		"id": 1757004989038,
-		"title": "Now we're on a roll. The earlier we can react to a threat, the less we die.",
-		"description": "The rest of this story is about us growing new weirdnesses so that we can react to threats earlier and earlier.",
-		"createdAt": "2025-09-04T16:56:29.038Z"
-	},
-	{
-		"id": 1757005255077,
-		"title": "Touch. Reacting when something touches us.",
-		"description": "In early days, we were just bouncing off each other and the seabed. But  fast forward to a time when some blobs  had become predators eating other blobs (Blindly - it was early days). Reacting to touch could save your life.",
-		"createdAt": "2025-09-04T17:00:55.077Z"
-	},
-	{
-		"id": 1757005679463,
-		"title": "Patterns",
-		"description": "water temperature - day and night - feeding",
-		"createdAt": "2025-09-04T17:07:59.463Z"
-	},
-	{
-		"id": 1757005381788,
-		"title": "Hearing. Like feeling something approaching. before it actually has you in its clutches.",
-		"description": "Like smell was to taste. Early warning.",
-		"createdAt": "2025-09-04T17:03:01.788Z"
-	},
-	{
-		"id": 1757005539498,
-		"title": "Overload!",
-		"description": "vibrations are happening all the time.",
-		"createdAt": "2025-09-04T17:05:39.498Z"
-	},
-	{
-		"id": 1757005586433,
-		"title": "Filtering. The start of a library",
-		"description": "of fears",
-		"createdAt": "2025-09-04T17:06:26.433Z"
-	},
-	{
-		"id": 1757005946417,
-		"title": "Superpower 4. Ignoring",
-		"description": "Sophisticated patterns. If you don't ignore, you die over-reacting",
-		"createdAt": "2025-09-04T17:12:26.417Z"
-	},
-	{
-		"id": 1757005482035,
-		"title": "Sight",
-		"description": "(The Big One (but... not the Biggest One)).",
-		"createdAt": "2025-09-04T17:04:42.035Z"
-	},
-	{
-		"id": 1757006082798,
-		"title": "So what. Even grass can do all this.",
-		"description": "maybe. or at least a tiny fly.",
-		"createdAt": "2025-09-04T17:14:42.798Z"
-	}
+  {
+    "id": 1757002796987,
+    "title": "we used to be simple blob-like cells in a primordial sea",
+    "description": "couldn't do much",
+    "createdAt": "2025-09-04T16:19:56.987Z"
+  },
+  {
+    "id": 1757002310902,
+    "title": "our first superpower was to avoid death by copying ourselves.",
+    "description": "reproduction is part of what we mean by 'living'",
+    "createdAt": "2025-09-04T16:11:50.902Z"
+  },
+  {
+    "id": 1757002963954,
+    "title": "We copied ourselves slightly badly.",
+    "description": "mutations",
+    "createdAt": "2025-09-04T16:22:43.954Z"
+  },
+  {
+    "id": 1757242551951,
+    "title": "Pure genius",
+    "description": "here's why",
+    "createdAt": "2025-09-07T10:55:51.951Z"
+  },
+  {
+    "id": 1757003090193,
+    "title": "Sometimes, conditions in the primordial sea would change making it too toxic: too hot or too cold for us, and we died.",
+    "description": "Being just blobs, we just died.",
+    "createdAt": "2025-09-04T16:24:50.193Z"
+  },
+  {
+    "id": 1757003193241,
+    "title": "But some of the oddballs preferred the new conditions, and thrived.",
+    "description": "and reproduced and became the new normal. Natural selection.",
+    "createdAt": "2025-09-04T16:26:33.241Z"
+  },
+  {
+    "id": 1757003383464,
+    "title": "the bad copies we were effectively experiments",
+    "description": "If a peculiarity helped some of us thrive and reproduce more , that become the new normal.",
+    "createdAt": "2025-09-04T16:29:43.464Z"
+  },
+  {
+    "id": 1757003716806,
+    "title": "On and on. We avoided death and became more complicated. None of it on purpose.",
+    "description": "New weirdnesses were being added to the previous ones, by luck. Over zillions of generations. It took a lot of us to be \nborn live and die",
+    "createdAt": "2025-09-04T16:35:16.806Z"
+  },
+  {
+    "id": 1757003996228,
+    "title": "Superpower 2. Reacting (in any way) might give you a fighting chance.",
+    "description": "If a blob had a mutation that made it twitch when the sea chemistry changed, it might twitch into safe water and survive. No brain involved, but doing nothing lets death get you.",
+    "createdAt": "2025-09-04T16:39:56.228Z"
+  },
+  {
+    "id": 1757004317554,
+    "title": "And... Bingo. The first sensory mechanism.",
+    "description": "If a change to your environment has an effect on you, you're 'sensing' it, and if it triggers some useful, you avoid death.",
+    "createdAt": "2025-09-04T16:45:17.554Z"
+  },
+  {
+    "id": 1757004498194,
+    "title": "Taste. if the sea you're in gets toxic Stop drinking it.",
+    "description": "as blobs We were like cows in a grass field Absorbing what we needed From the nutrient mix Born in the salty sea. If we were able to stop that absorption Something toxic was in the water It helped us avoid death.",
+    "createdAt": "2025-09-04T16:48:18.194Z"
+  },
+  {
+    "id": 1757004622240,
+    "title": "reacting too late is no good.",
+    "description": "if you've already absorbed poison, your reaction won't save you.",
+    "createdAt": "2025-09-04T16:50:22.240Z"
+  },
+  {
+    "id": 1757004722336,
+    "title": "Superpower 3. Reacting before its too late is very good. Smell is 'tasting before it gets in'.",
+    "description": "if something on the outside can detect the thing that will kill your inside You can shut down without having to taste it.",
+    "createdAt": "2025-09-04T16:52:02.336Z"
+  },
+  {
+    "id": 1757004989038,
+    "title": "Now we're on a roll. The earlier we can react to a threat, the less we die.",
+    "description": "The rest of this story is about us growing new weirdnesses so that we can react to threats earlier and earlier.",
+    "createdAt": "2025-09-04T16:56:29.038Z"
+  },
+  {
+    "id": 1757005255077,
+    "title": "Touch. Reacting when something touches us.",
+    "description": "In early days, we were just bouncing off each other and the seabed. But  fast forward to a time when some blobs  had become predators eating other blobs (Blindly - it was early days). Reacting to touch could save your life.",
+    "createdAt": "2025-09-04T17:00:55.077Z"
+  },
+  {
+    "id": 1757005679463,
+    "title": "Patterns",
+    "description": "water temperature - day and night - feeding",
+    "createdAt": "2025-09-04T17:07:59.463Z"
+  },
+  {
+    "id": 1757005381788,
+    "title": "Hearing. Like feeling something approaching. before it actually has you in its clutches.",
+    "description": "Like smell was to taste. Early warning.",
+    "createdAt": "2025-09-04T17:03:01.788Z"
+  },
+  {
+    "id": 1757005539498,
+    "title": "Overload!",
+    "description": "vibrations are happening all the time.",
+    "createdAt": "2025-09-04T17:05:39.498Z"
+  },
+  {
+    "id": 1757005586433,
+    "title": "Filtering. The start of a library",
+    "description": "of fears",
+    "createdAt": "2025-09-04T17:06:26.433Z"
+  },
+  {
+    "id": 1757005946417,
+    "title": "Superpower 4. Ignoring",
+    "description": "Sophisticated patterns. If you don't ignore, you die over-reacting",
+    "createdAt": "2025-09-04T17:12:26.417Z"
+  },
+  {
+    "id": 1757005482035,
+    "title": "Sight",
+    "description": "(The Big One (but... not the Biggest One)).",
+    "createdAt": "2025-09-04T17:04:42.035Z"
+  },
+  {
+    "id": 1757006082798,
+    "title": "So what. Even grass can do all this.",
+    "description": "maybe. or at least a tiny fly.",
+    "createdAt": "2025-09-04T17:14:42.798Z"
+  }
 ]

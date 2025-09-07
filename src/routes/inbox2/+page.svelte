@@ -166,6 +166,33 @@
 				updateIdea(ideaId, field, target.textContent.trim());
 				target.blur();
 				break;
+			case 'Tab':
+				event.preventDefault();
+				// Save current edit first
+				updateIdea(ideaId, field, target.textContent.trim());
+
+				if (field === 'title') {
+					// Move to description of the same idea
+					const article = target.closest('article');
+					const description = article.querySelector('.idea-description');
+					if (description) {
+						description.focus();
+						// Position cursor at end
+						const range = document.createRange();
+						const selection = window.getSelection();
+						range.selectNodeContents(description);
+						range.collapse(false);
+						selection.removeAllRanges();
+						selection.addRange(range);
+					}
+				} else if (field === 'description') {
+					// Jump to new idea form
+					const titleInput = document.getElementById('idea-title');
+					if (titleInput) {
+						titleInput.focus();
+					}
+				}
+				break;
 			case 'ArrowUp':
 				event.preventDefault();
 				moveIdea(ideaId, 'up');
@@ -187,8 +214,33 @@
 		addIdea();
 	}
 
+	// Global keyboard navigation
+	function handleGlobalKeydown(event) {
+		// If TAB is pressed and no element has focus (or focus is on body/document)
+		if (
+			event.key === 'Tab' &&
+			(document.activeElement === document.body || document.activeElement === document.documentElement)
+		) {
+			event.preventDefault();
+			const titleInput = document.getElementById('idea-title');
+			if (titleInput) {
+				titleInput.focus();
+			}
+		}
+	}
+
 	// Initialize
-	onMount(loadIdeas);
+	onMount(() => {
+		loadIdeas();
+		// Add global keyboard listener
+		document.addEventListener('keydown', handleGlobalKeydown);
+	});
+
+	// Cleanup
+	import { onDestroy } from 'svelte';
+	onDestroy(() => {
+		document.removeEventListener('keydown', handleGlobalKeydown);
+	});
 </script>
 
 <div class="page centred-col">
@@ -208,27 +260,27 @@
 							<div class="row apart">
 								<div class="col">
 									<h4
+										class="idea-title"
 										contenteditable="true"
-										on:keydown={event => handleContentEditableKeydown(event, idea.id, 'title')}
-										on:blur={event => handleContentEditableBlur(event, idea.id, 'title')}
+										on:keydown={event => handleEditableKeydown(event, idea.id, 'title')}
+										on:blur={event => handleEditableBlur(event, idea.id, 'title')}
 									>
 										{idea.title}
 									</h4>
 
 									{#if idea.description}
 										<p
-											class="faint-text"
+											class="faint-text idea-description"
 											contenteditable="true"
-											on:keydown={event =>
-												handleContentEditableKeydown(event, idea.id, 'description')}
-											on:blur={event => handleContentEditableBlur(event, idea.id, 'description')}
+											on:keydown={event => handleEditableKeydown(event, idea.id, 'description')}
+											on:blur={event => handleEditableBlur(event, idea.id, 'description')}
 										>
 											{idea.description}
 										</p>
 									{/if}
 								</div>
 								<button
-									class="tiny-icon-button"
+									class="white tiny-icon-button remove-idea hide-until-hover"
 									on:click={() => removeIdea(idea.id)}
 									aria-label="Remove idea"
 									title="Remove idea"
@@ -255,7 +307,7 @@
 		<!-- add idea -->
 
 		<!-- <h2 id="add-idea-heading">Add New Idea</h2> -->
-		<form on:submit={handleSubmit} class="stack">
+		<form on:submit={handleSubmit} class="stack new-idea">
 			<!-- <label for="idea-title">Title</label> -->
 			<input type="text" id="idea-title" bind:value={newIdea.title} placeholder="Enter idea title..." required />
 
@@ -273,5 +325,15 @@
 </div>
 
 <style>
+	.panel {
+		padding-right: 1rem;
+	}
 	/* Minimal additional styles for this specific component */
+	.hide-until-hover {
+		opacity: 0;
+		transition: opacity 0.2s;
+	}
+	article:hover .remove-idea {
+		opacity: 1;
+	}
 </style>
