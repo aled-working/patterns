@@ -39,7 +39,7 @@
 	}
 
 	async function restoreFocus(position) {
-		if (!focusState.element || !focusState.field) return;
+		if (!focusState.element || !focusState.field || typeof document === 'undefined') return;
 
 		await tick();
 
@@ -126,7 +126,9 @@
 
 	// Reordering with focus preservation
 	async function moveIdea(ideaId, direction) {
-		saveFocus(document.activeElement);
+		if (typeof document !== 'undefined') {
+			saveFocus(document.activeElement);
+		}
 
 		let newPosition = -1;
 
@@ -178,18 +180,22 @@
 					if (description) {
 						description.focus();
 						// Position cursor at end
-						const range = document.createRange();
-						const selection = window.getSelection();
-						range.selectNodeContents(description);
-						range.collapse(false);
-						selection.removeAllRanges();
-						selection.addRange(range);
+						if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+							const range = document.createRange();
+							const selection = window.getSelection();
+							range.selectNodeContents(description);
+							range.collapse(false);
+							selection.removeAllRanges();
+							selection.addRange(range);
+						}
 					}
 				} else if (field === 'description') {
 					// Jump to new idea form
-					const titleInput = document.getElementById('idea-title');
-					if (titleInput) {
-						titleInput.focus();
+					if (typeof document !== 'undefined') {
+						const titleInput = document.getElementById('idea-title');
+						if (titleInput) {
+							titleInput.focus();
+						}
 					}
 				}
 				break;
@@ -237,12 +243,14 @@
 		if (fullTitle && target.textContent !== fullTitle) {
 			target.textContent = fullTitle;
 			// Position cursor at end
-			const range = document.createRange();
-			const selection = window.getSelection();
-			range.selectNodeContents(target);
-			range.collapse(false);
-			selection.removeAllRanges();
-			selection.addRange(range);
+			if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+				const range = document.createRange();
+				const selection = window.getSelection();
+				range.selectNodeContents(target);
+				range.collapse(false);
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
 		}
 	}
 
@@ -263,6 +271,7 @@
 		// If TAB is pressed and no element has focus (or focus is on body/document)
 		if (
 			event.key === 'Tab' &&
+			typeof document !== 'undefined' &&
 			(document.activeElement === document.body || document.activeElement === document.documentElement)
 		) {
 			event.preventDefault();
@@ -277,17 +286,21 @@
 	onMount(() => {
 		loadIdeas();
 		// Add global keyboard listener
-		document.addEventListener('keydown', handleGlobalKeydown);
+		if (typeof document !== 'undefined') {
+			document.addEventListener('keydown', handleGlobalKeydown);
+		}
 	});
 
 	// Cleanup
 	import { onDestroy } from 'svelte';
 	onDestroy(() => {
-		document.removeEventListener('keydown', handleGlobalKeydown);
+		if (typeof document !== 'undefined') {
+			document.removeEventListener('keydown', handleGlobalKeydown);
+		}
 	});
 </script>
 
-<div class="page centred-col">
+<div class="page row">
 	<main class="panel">
 		<!-- header -->
 		<!-- <header>
@@ -359,12 +372,11 @@
 				<p><em>No ideas yet. Add your first idea above!</em></p>
 			</section>
 		{/if}
+	</main>
 
-		<!-- add idea -->
-
-		<!-- <h2 id="add-idea-heading">Add New Idea</h2> -->
+	<!-- Add idea form in its own panel -->
+	<aside class="panel form-panel">
 		<form on:submit={handleSubmit} class="stack new-idea">
-			<!-- <label for="idea-title">Title</label> -->
 			<input
 				type="text"
 				id="idea-title"
@@ -374,7 +386,6 @@
 				on:keydown={handleFormKeydown}
 			/>
 
-			<!-- <label for="idea-description">Description</label> -->
 			<textarea
 				id="idea-description"
 				bind:value={newIdea.description}
@@ -385,13 +396,22 @@
 
 			<button type="submit fill" class="blue button">Add Idea</button>
 		</form>
-	</main>
+	</aside>
 </div>
 
 <style>
 	.panel {
 		padding-right: 1rem;
 	}
+
+	/* Positioning class for form panel */
+	.form-panel {
+		margin-top: 1rem;
+		position: fixed;
+		top: 2rem;
+		left: 50%;
+	}
+
 	/* Minimal additional styles for this specific component */
 	.hide-until-hover {
 		opacity: 0;
